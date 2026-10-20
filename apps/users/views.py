@@ -160,3 +160,5 @@ def user_delete_ajax(request, pk):
         "status": "deleted",
         "message": f'User "{username}" has been deleted successfully.',
     })
+
+    

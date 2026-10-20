@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": "skincare_db",
+        "NAME": "bsitcrud",
         "USER": "root",
         "PASSWORD": "",
         "HOST": "localhost",

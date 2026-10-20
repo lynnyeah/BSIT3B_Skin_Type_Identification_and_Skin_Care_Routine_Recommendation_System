@@ -1,26 +1,545 @@
 {% extends "theme/base.html" %}
-{% block content %}
-<div class="container-xl">
-  <div class="page-header d-print-none" aria-label="Page header">
-    <div class="container-xl">
-      <div class="row align-items-center">
-        <div class="col">
-          <div class="page-pretitle">Overview</div>
-          <div class="d-flex align-items-center gap-3 flex-wrap d-none d-md-flex">
-            <h2 class="page-title mb-0">Dashboard</h2>
-          </div>
-          <h2 class="page-title mb-0 d-md-none">Dashboard</h2>
-        </div>
-      </div>
-    </div>
-  </div>
-  <br>
+{% load static %}
 
-  <div class="card">
-    <div class="card-body text-muted">
-      Dashboard
+{% block content %}
+
+<style>
+    .skin-dashboard {
+        color: #263b32;
+        font-family: Arial, sans-serif;
+        padding: 10px 5px 30px;
+    }
+
+    .skin-dashboard .welcome {
+        margin-bottom: 25px;
+    }
+
+    .skin-dashboard .eyebrow {
+        color: #789080;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+    }
+
+    .skin-dashboard h2 {
+        font-size: 28px;
+        font-weight: 700;
+        color: #263b32;
+        margin: 6px 0;
+    }
+
+    .skin-dashboard .subtitle {
+        color: #829087;
+        font-size: 14px;
+    }
+
+    .skin-dashboard .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+        margin-bottom: 22px;
+    }
+
+    .skin-dashboard .skin-card,
+    .skin-dashboard .panel {
+        background: #fff;
+        border: 1px solid #e8eee8;
+        border-radius: 18px;
+        padding: 22px;
+        box-shadow: 0 5px 20px rgba(48, 76, 55, 0.04);
+    }
+
+    .skin-dashboard .metric-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .skin-dashboard .metric-icon {
+        width: 42px;
+        height: 42px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 13px;
+        font-size: 20px;
+        background: #eef8ed;
+    }
+
+    .skin-dashboard .metric-value {
+        font-size: 25px;
+        font-weight: 700;
+    }
+
+    .skin-dashboard .metric-label {
+        font-size: 15px;
+        font-weight: 600;
+        margin-bottom: 7px;
+    }
+
+    .skin-dashboard .metric-description {
+        color: #849087;
+        font-size: 12px;
+        line-height: 1.6;
+    }
+
+    .skin-dashboard .progress-track {
+        background: #edf1ed;
+        height: 6px;
+        border-radius: 10px;
+        margin: 15px 0 8px;
+        overflow: hidden;
+    }
+
+    .skin-dashboard .progress-fill {
+        height: 100%;
+        border-radius: 10px;
+    }
+
+    .skin-dashboard .elasticity {
+        background: #8474d9;
+        width: 75%;
+    }
+
+    .skin-dashboard .moisture {
+        background: #65bd79;
+        width: 80%;
+    }
+
+    .skin-dashboard .sensitivity {
+        background: #e6b45f;
+        width: 45%;
+    }
+
+    .skin-dashboard .main-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.7fr) minmax(260px, 1fr);
+        gap: 20px;
+        align-items: stretch;
+    }
+
+    .skin-dashboard .panel-heading {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+
+    .skin-dashboard .panel-heading h5 {
+        font-size: 17px;
+        font-weight: 700;
+        margin: 0;
+    }
+
+    .skin-dashboard .panel-heading p {
+        font-size: 12px;
+        color: #8a958d;
+        margin: 6px 0 0;
+    }
+
+    .skin-dashboard .chart-wrap {
+        position: relative;
+        height: 260px;
+        width: 100%;
+    }
+
+    .skin-dashboard .analysis-image {
+        background: linear-gradient(135deg, #e6f4d9, #c9e7ae);
+        border-radius: 15px;
+        height: 190px;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .skin-dashboard .analysis-image img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+    }
+
+    .skin-dashboard .face-placeholder {
+        text-align: center;
+        color: #56734e;
+        padding: 20px;
+    }
+
+    .skin-dashboard .face-placeholder .face-icon {
+        font-size: 65px;
+        display: block;
+        margin-bottom: 8px;
+    }
+
+    .skin-dashboard .face-placeholder p {
+        font-size: 12px;
+        margin: 0;
+    }
+
+    .skin-dashboard .analysis-results {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 9px;
+        margin-bottom: 20px;
+    }
+
+    .skin-dashboard .result-box {
+        background: #f7faf6;
+        border-radius: 12px;
+        padding: 12px 8px;
+        text-align: center;
+    }
+
+    .skin-dashboard .result-box .result-icon {
+        font-size: 19px;
+        display: block;
+        margin-bottom: 7px;
+    }
+
+    .skin-dashboard .result-box strong {
+        font-size: 12px;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .skin-dashboard .result-box span {
+        font-size: 11px;
+        color: #7b8b7e;
+    }
+
+    .skin-dashboard .dashboard-button {
+        display: block;
+        text-align: center;
+        text-decoration: none;
+        padding: 12px 16px;
+        border-radius: 12px;
+        font-size: 13px;
+        font-weight: 600;
+        background: #dff4d5;
+        color: #315d37;
+        border: 1px solid #cce8c1;
+        transition: 0.2s;
+    }
+
+    .skin-dashboard .dashboard-button:hover {
+        background: #ccebc0;
+        color: #244b2b;
+        text-decoration: none;
+    }
+
+    .skin-dashboard .quick-actions {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 15px;
+        margin-top: 22px;
+    }
+
+    .skin-dashboard .action-card {
+        display: block;
+        text-decoration: none;
+        color: #31483a;
+        padding: 19px;
+        background: #fff;
+        border: 1px solid #e8eee8;
+        border-radius: 16px;
+        transition: 0.2s;
+    }
+
+    .skin-dashboard .action-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(48, 76, 55, 0.08);
+        color: #315d37;
+        text-decoration: none;
+    }
+
+    .skin-dashboard .action-icon {
+        font-size: 23px;
+        margin-bottom: 12px;
+        display: block;
+    }
+
+    .skin-dashboard .action-card strong {
+        display: block;
+        font-size: 14px;
+        margin-bottom: 6px;
+    }
+
+    .skin-dashboard .action-card small {
+        color: #87928a;
+        font-size: 12px;
+        line-height: 1.5;
+    }
+
+    @media (max-width: 900px) {
+        .skin-dashboard .dashboard-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .skin-dashboard .main-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .skin-dashboard .dashboard-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .skin-dashboard .quick-actions {
+            grid-template-columns: 1fr;
+        }
+
+        .skin-dashboard h2 {
+            font-size: 23px;
+        }
+
+        .skin-dashboard .skin-card,
+        .skin-dashboard .panel {
+            padding: 16px;
+        }
+    }
+</style>
+
+<div class="skin-dashboard">
+
+    <!-- Dashboard Header -->
+    <div class="welcome">
+        <div class="eyebrow">Overview</div>
+        <h2>Let's take care of your skin</h2>
+        <p class="subtitle">
+            Your personalized skin analysis and skincare routine dashboard.
+        </p>
     </div>
-  </div>
+
+    <!-- Skin Metric Cards -->
+    <div class="dashboard-grid">
+
+        <div class="skin-card">
+            <div class="metric-top">
+                <div class="metric-icon">✨</div>
+                <div class="metric-value" style="color:#8474d9;">75%</div>
+            </div>
+            <div class="metric-label">Skin Elasticity</div>
+            <div class="metric-description">
+                Track the appearance and firmness of your skin.
+            </div>
+            <div class="progress-track">
+                <div class="progress-fill elasticity"></div>
+            </div>
+            <div class="metric-description">Sample dashboard value</div>
+        </div>
+
+        <div class="skin-card">
+            <div class="metric-top">
+                <div class="metric-icon">💧</div>
+                <div class="metric-value" style="color:#65bd79;">80%</div>
+            </div>
+            <div class="metric-label">Skin Moisture</div>
+            <div class="metric-description">
+                Review your skin hydration and moisture level.
+            </div>
+            <div class="progress-track">
+                <div class="progress-fill moisture"></div>
+            </div>
+            <div class="metric-description">Sample dashboard value</div>
+        </div>
+
+        <div class="skin-card">
+            <div class="metric-top">
+                <div class="metric-icon">🌿</div>
+                <div class="metric-value" style="color:#d6a54d;">45%</div>
+            </div>
+            <div class="metric-label">Skin Sensitivity</div>
+            <div class="metric-description">
+                Review sensitivity indicators from your skin assessment.
+            </div>
+            <div class="progress-track">
+                <div class="progress-fill sensitivity"></div>
+            </div>
+            <div class="metric-description">Sample dashboard value</div>
+        </div>
+
+    </div>
+
+    <!-- Chart and Face Analysis -->
+    <div class="main-grid">
+
+        <div class="panel">
+            <div class="panel-heading">
+                <div>
+                    <h5>Skin Test Analysis</h5>
+                    <p>Overview of sample skin assessment scores</p>
+                </div>
+                <span style="font-size:12px;color:#719276;">
+                    Demo data
+                </span>
+            </div>
+
+            <div class="chart-wrap">
+                <canvas id="skinAnalysisChart"></canvas>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-heading">
+                <div>
+                    <h5>Face Analysis</h5>
+                    <p>Your skin assessment overview</p>
+                </div>
+            </div>
+
+            <div class="analysis-image">
+                <div class="face-placeholder">
+                    <span class="face-icon">👩🏻</span>
+                    <p>Complete your skin test to view your results</p>
+                </div>
+            </div>
+
+            <div class="analysis-results">
+                <div class="result-box">
+                    <span class="result-icon">✨</span>
+                    <strong>Elasticity</strong>
+                    <span>Assessment</span>
+                </div>
+
+                <div class="result-box">
+                    <span class="result-icon">💧</span>
+                    <strong>Moisture</strong>
+                    <span>Assessment</span>
+                </div>
+
+                <div class="result-box">
+                    <span class="result-icon">🌿</span>
+                    <strong>Sensitivity</strong>
+                    <span>Assessment</span>
+                </div>
+            </div>
+
+            <a href="#" class="dashboard-button">
+                Start Skin Test →
+            </a>
+        </div>
+
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions">
+
+        <a href="{% url 'users:user_list' %}" class="action-card">
+            <span class="action-icon">🔬</span>
+            <strong>Skin Type Identification</strong>
+            <small>Start an assessment to identify your skin type.</small>
+        </a>
+
+        <a href="#" class="action-card">
+            <span class="action-icon">🧴</span>
+            <strong>Skincare Routine</strong>
+            <small>Explore skincare routine recommendations.</small>
+        </a>
+
+        <a href="#" class="action-card">
+            <span class="action-icon">📋</span>
+            <strong>Products</strong>
+            <small>Explore skincare products suited to your needs.</small>
+        </a>
+
+    </div>
 
 </div>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const canvas = document.getElementById("skinAnalysisChart");
+
+        if (!canvas || typeof Chart === "undefined") {
+            return;
+        }
+
+        new Chart(canvas, {
+            type: "line",
+            data: {
+                labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+                datasets: [
+                    {
+                        label: "Elasticity",
+                        data: [55, 62, 59, 70, 66, 75, 75],
+                        borderColor: "#8474d9",
+                        backgroundColor: "rgba(132,116,217,0.08)",
+                        tension: 0.4,
+                        borderWidth: 2,
+                        pointRadius: 3,
+                        fill: false
+                    },
+                    {
+                        label: "Moisture",
+                        data: [60, 58, 68, 65, 74, 78, 80],
+                        borderColor: "#65bd79",
+                        backgroundColor: "rgba(101,189,121,0.08)",
+                        tension: 0.4,
+                        borderWidth: 2,
+                        pointRadius: 3,
+                        fill: false
+                    },
+                    {
+                        label: "Sensitivity",
+                        data: [40, 45, 42, 50, 46, 43, 45],
+                        borderColor: "#e6b45f",
+                        backgroundColor: "rgba(230,180,95,0.08)",
+                        tension: 0.4,
+                        borderWidth: 2,
+                        pointRadius: 3,
+                        fill: false
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: {
+                    intersect: false,
+                    mode: "index"
+                },
+                plugins: {
+                    legend: {
+                        position: "bottom",
+                        labels: {
+                            usePointStyle: true,
+                            boxWidth: 7,
+                            padding: 18
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        ticks: {
+                            callback: function(value) {
+                                return value + "%";
+                            }
+                        },
+                        grid: {
+                            color: "#edf1ed"
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
+
 {% endblock %}
+

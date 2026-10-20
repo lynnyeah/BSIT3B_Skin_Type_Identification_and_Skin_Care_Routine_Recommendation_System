@@ -226,18 +226,25 @@ html {
   background-color: transparent;
 }
 
+
 .dh-sidebar {
-  --tblr-navbar-bg: #12142c;
-  --tblr-navbar-border-color: rgba(255, 255, 255, 0.06);
-  --tblr-navbar-color: rgba(255, 255, 255, 0.64);
+  --tblr-navbar-bg: #1b5e20;
+  --tblr-navbar-border-color: rgba(255, 255, 255, 0.10);
+  --tblr-navbar-color: rgba(255, 255, 255, 0.80);
   --tblr-navbar-hover-color: #ffffff;
   --tblr-navbar-active-color: #ffffff;
-  --tblr-navbar-disabled-color: rgba(255, 255, 255, 0.35);
-  --tblr-navbar-active-bg: rgba(255, 255, 255, 0.08);
+  --tblr-navbar-disabled-color: rgba(255, 255, 255, 0.40);
+  --tblr-navbar-active-bg: #388e3c;
+
   background:
-    radial-gradient(120% 70% at 100% 0%, color-mix(in srgb, var(--tblr-primary) 18%, transparent) 0%, transparent 55%),
-    linear-gradient(180deg, #151737 0%, #101224 100%);
+    radial-gradient(
+      120% 70% at 100% 0%,
+      rgba(129, 199, 132, 0.18) 0%,
+      transparent 55%
+    ),
+    linear-gradient(180deg, #2e7d32 0%, #1b5e20 100%);
 }
+
 
 .dh-sidebar .navbar-brand {
   padding: 1.1rem 1.25rem;
@@ -254,8 +261,8 @@ html {
   border-radius: 0.75rem;
   color: #fff;
   font-size: 1rem;
-  background: linear-gradient(135deg, var(--tblr-primary) 0%, #8b5cf6 100%);
-  box-shadow: 0 6px 16px -6px color-mix(in srgb, var(--tblr-primary) 80%, transparent);
+  background: linear-gradient(135deg, #66bb6a 0%, #2e7d32 100%);
+box-shadow: 0 6px 16px -6px rgba(76, 175, 80, 0.65);
 }
 
 .dh-brand-name {
@@ -303,8 +310,12 @@ html {
 
 .dh-sidebar .navbar-nav .nav-link.active {
   color: #ffffff;
-  background-image: linear-gradient(135deg, var(--tblr-primary) 0%, color-mix(in srgb, var(--tblr-primary) 78%, #141733) 100%);
-  box-shadow: 0 8px 18px -8px color-mix(in srgb, var(--tblr-primary) 55%, transparent);
+  background-image: linear-gradient(
+    135deg,
+    #66bb6a 0%,
+    #388e3c 100%
+  );
+  box-shadow: 0 8px 18px -8px rgba(76, 175, 80, 0.55);
 }
 
 .dh-sidebar .navbar-nav .nav-link.active .nav-link-title {
